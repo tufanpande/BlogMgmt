@@ -2,13 +2,14 @@
 
 // schema=>model => controller=>api()
 const { Schema, model } = require("mongoose");
+const{ObjectId}= Schema.Types;
 
 const blogSchema = new Schema({
   
-  title: { type: String, required: true },
-  author: { type: String, required: true },
+  title: { type: String },
+  author: { type: ObjectId,ref:"User", required: true },
   
-  pages:{type:Number,required:true},
+  pages:{type:Number},
 
   content: { type: String, required: true },
 

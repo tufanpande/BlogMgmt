@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const blogController = require("./blog.controller");
-
+const {validate} =require("./blog.validator");
 router.get("/", async(req, res, next) => {
     try {
         const result= await blogController.get();
@@ -10,7 +10,7 @@ router.get("/", async(req, res, next) => {
       next(e);
     }
   });
-  router.post("/", async(req, res, next) => {
+  router.post("/",validate, async( req, res, next) => {
     try {
         const result= await blogController.create(req.body);
       res.json({ msg: result });
@@ -19,7 +19,7 @@ router.get("/", async(req, res, next) => {
     }
   });
 
-  router.get("/:_id", async(req, res, next) => {
+  router.get("/:id", async(req, res, next) => {
     try {
         const result= await blogController.getById(req.params.id);
       res.json({ msg: result });
@@ -28,7 +28,7 @@ router.get("/", async(req, res, next) => {
     }
   });
 
-  router.put("/:_id", async(req, res, next) => {
+  router.put("/:id", async(req, res, next) => {
     try {
         const result= await blogController.updateById(req.params.id, req.body);
       res.json({ msg: result });
@@ -36,7 +36,7 @@ router.get("/", async(req, res, next) => {
       next(e);
     }
   });
-  router.patch("/:_id", async(req, res, next) => {
+  router.patch("/:id", async(req, res, next) => {
     try {
         const result= await blogController.updateById(req.params.id, req.body);
       res.json({ msg: result });
@@ -44,7 +44,7 @@ router.get("/", async(req, res, next) => {
       next(e);
     }
   });
-  router.delete("/:_id", async(req, res, next) => {
+  router.delete("/:id", async(req, res, next) => {
     try {
         const result= await blogController.removeById(req.params.id);
       res.json({ msg: result });
