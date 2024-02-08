@@ -1,4 +1,5 @@
 const userModel = require("./user.model");
+const bcryptjs = require("bcryptjs");
 
 // Create
 const create = (payload) => {
@@ -24,5 +25,18 @@ const updateById = (_id, payload) => {
 const removeById = (_id) => {
   return userModel.deleteOne({_id});
 };
+const register = async (payload) => {
+  try {
+    //hashin the password
+    const hashedPassword = await bcrypt.hash(payload.password, 10);
 
-module.exports = { create, get, getById, updateById, removeById };
+    //reutrning the hashed password
+    payload.password = hashedPassword;
+
+    return userModel.create(payload);
+  } catch (error) {
+    error;
+  }
+};
+
+module.exports = { create, get, getById, updateById, removeById, register };
