@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcryptjs = require("bcryptjs");
 
 const userController = require("./user.controller");
 const {validate} =require("./user.validator");
@@ -19,7 +20,17 @@ router.get("/", async(req, res, next) => {
       next(e);
     }
   });
+  router.post("/register",validate, async( req, res, next) => {
+    try {
+      const data = req.body;
+      const result = await userController.register(data);
+      res.json({ msg: "User registered successfully", user: result });
+    } catch (e) {
+      next(e);
+    }
+  });
 
+  
   router.get("/:id", async(req, res, next) => {
     try {
         const result= await userController.getById(req.params.id);
