@@ -1,11 +1,13 @@
 const Joi =require("joi");
 
-
 const schema =Joi.object({
     name: Joi.string().required(),
     email:Joi.string().email({
         minDomainSegments:1,
         tlds:{arrow:["com"]},
+    
+    
+
     }),
     
 
